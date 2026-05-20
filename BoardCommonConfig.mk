@@ -20,6 +20,9 @@ DEVICE_PATH := device/samsung/galaxys2-common
 # HIDL
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 
+# A/B
+AB_OTA_UPDATER := false
+
 # Allow duplicate rules to override them
 BUILD_BROKEN_DUP_RULES := true
 
@@ -40,7 +43,6 @@ TARGET_CPU_VARIANT := cortex-a9
 ARCH_ARM_HAVE_NEON := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_USES_GRALLOC1 := true
-TARGET_USES_64_BIT_BINDER := true
 
 BOARD_VENDOR := samsung
 TARGET_BOARD_PLATFORM := exynos4
@@ -54,8 +56,6 @@ TARGET_NO_SEPARATE_RECOVERY := true
 TARGET_PROVIDES_INIT := true
 TARGET_PROVIDES_INIT_TARGET_RC := true
 
-#BOARD_NAND_PAGE_SIZE := 4096
-#BOARD_NAND_SPARE_SIZE := 128
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x40000000
 BOARD_KERNEL_CMDLINE := console=ttySAC2,115200 consoleblank=0
@@ -69,6 +69,7 @@ DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 
 # Properties
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
+TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
 
 # Bionic
 TARGET_LD_SHIM_LIBS := \
@@ -96,20 +97,16 @@ MALLOC_SVELTE := true
 TARGET_FS_CONFIG_GEN := device/samsung/galaxys2-common/config.fs
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
-BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2147483648
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147467264
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_CACHEIMAGE_PARTITION_SIZE := 104857600
 BOARD_FLASH_BLOCK_SIZE := 4096
 BOARD_ROOT_EXTRA_FOLDERS := efs misc
 BOARD_ROOT_EXTRA_SYMLINKS := /data/tombstones:/tombstones
 
 # Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := ./device/samsung/galaxys2-common
+#TARGET_RELEASETOOLS_EXTENSIONS := ./device/samsung/galaxys2-common
 
 # Hardware tunables
-BOARD_HARDWARE_CLASS := hardware/samsung/lineagehw \
+BOARD_HARDWARE_CLASS := hardware/samsung_legacy/lineagehw \
     device/samsung/galaxys2-common/lineagehw
 
 # Graphics
@@ -170,14 +167,14 @@ TARGET_NEEDS_NETD_DIRECT_CONNECT_RULE := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
+PRODUCT_SOONG_NAMESPACES += hardware/broadcom/libbt
 BOARD_CUSTOM_BT_CONFIG := device/samsung/galaxys2-common/bluetooth/vnd_smdk4210.txt
 
 # Selinux
 SELINUX_IGNORE_NEVERALLOWS := true
 BOARD_VENDOR_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/vendor
-SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/public
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/private
+#SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/public
+#SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/private
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/galaxys2-common/recovery/recovery_keys.c
@@ -205,9 +202,6 @@ WITH_LINEAGE_CHARGER := false
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxys2-common/shbootimg.mk
 BOARD_CUSTOM_KERNEL_MK := device/samsung/galaxys2-common/shkernel.mk
-
-# Memfd
-TARGET_HAS_MEMFD_BACKPORT := true
 
 # Use the non-open-source parts, if they're present
 -include vendor/samsung/galaxys2-common/BoardConfigVendor.mk

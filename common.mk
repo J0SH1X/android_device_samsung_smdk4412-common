@@ -79,10 +79,7 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/p2p_supplicant_overlay.conf:system/vendor/etc/wifi/p2p_supplicant_overlay.conf \
     $(COMMON_PATH)/configs/bcmdhd.cal:system/vendor/etc/wifi/bcmdhd.cal
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=30 \
-    net.tethering.noprovisioning=true
+
 
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
@@ -106,7 +103,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
+    android.hardware.usb@1.0-service
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -115,7 +112,7 @@ PRODUCT_PACKAGES += \
 
 # Touch features
 PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.samsung
+    vendor.lineage.touch-service.samsung
 
 # Legacy RIL
 PRODUCT_PACKAGES += \
@@ -125,8 +122,8 @@ PRODUCT_PACKAGES += \
     libcutils-s2-shim
 
 # VNDK
-PRODUCT_COPY_FILES += \
-    prebuilts/vndk/v29/arm/arch-arm-armv7-a-neon/shared/vndk-sp/libcutils.so:$(TARGET_COPY_OUT_VENDOR)/lib/libcutils-v29.so
+PRODUCT_PACKAGES += \
+    libcutils-v29
 
 # Legacy GPS
 PRODUCT_PACKAGES += \
@@ -144,20 +141,7 @@ PRODUCT_PACKAGES += \
      android.hardware.health@2.1-service \
      android.hardware.health@2.1-impl
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.small_battery=true
 
-# Charger
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.charger.enable_suspend=true
-
-# Trust HAL
-PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
-
-# Use legacy ADB USB support
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.adb.nonblocking_ffs=false
 
 # Audio Packages
 PRODUCT_PACKAGES += \
@@ -171,10 +155,8 @@ PRODUCT_PACKAGES += \
 
 # HAL
 PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service.samsung-exynos \
     android.hardware.graphics.allocator@2.0-impl-exynos4 \
     android.hardware.graphics.mapper@2.0-impl-exynos4 \
-    android.hardware.graphics.composer@2.1-impl \
     android.hardware.keymaster@3.0-impl \
     gralloc.exynos4 \
     hwcomposer.exynos4 \
@@ -183,6 +165,7 @@ PRODUCT_PACKAGES += \
     libfimg \
     libsecion \
     libC
+#    android.hardware.graphics.composer@2.1-impl \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -210,16 +193,6 @@ PRODUCT_PACKAGES += \
 #    libstagefright-shim \
 #    mediaserver.rc
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    media.settings.xml=/vendor/etc/media_profiles.xml \
-    debug.stagefright.ccodec=0 \
-    media.stagefright.legacyencoder=true \
-    media.stagefright.less-secure=true \
-    debug.stagefright.omx_default_rank.sw-audio=1 \
-    debug.stagefright.omx_default_rank=0 \
-    vendor.mediacodec.binder.size=4 \
-    media.stagefright.thumbnail.prefer_hw_codecs=true \
-    ro.camera.enableLazyHal=true
 
 # MFC API
 PRODUCT_PACKAGES += \
@@ -262,47 +235,26 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
 
-# Graphics
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=131072 \
-    ro.zygote.disable_gl_preload=true \
-    ro.bq.gpu_to_cpu_unsupported=1 \
-    debug.hwui.render_dirty_regions=false
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(LOCAL_PATH) \
+    hardware/google/interfaces \
+    hardware/google/pixel \
+    hardware/samsung
+
+
+
 
 # RIL
 PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.0-service
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril_class=SamsungExynos4RIL \
-    mobiledata.interfaces=pdp0,gprs,ppp0,rmnet0,rmnet1 \
-    ro.telephony.call_ring.multiple=false \
-    ro.telephony.call_ring.delay=3000
 
-# Memory Optimizations
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.max_starting_bg=1 \
-    ro.lmk.use_psi=false \
-    ro.lmk.critical=0 \
-    ro.lmk.low=950 \
-    ro.lmk.swap_free_low_percentage=15 \
-    ro.vendor.qti.am.reschedule_service=true \
-    ro.vendor.qti.sys.fw.use_trim_settings=true \
-    ro.vendor.qti.sys.fw.trim_empty_percent=50 \
-    ro.vendor.qti.sys.fw.trim_cache_percent=100 \
-    ro.vendor.qti.sys.fw.empty_app_percent=25
 
-# Reduces GC frequency of foreground apps by 50%
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.foreground-heap-growth-multiplier=2.0
 
-# Services
-PRODUCT_PROPERTY_OVERRIDES += \
-    config.disable_atlas=true
 
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-    resize2fs_static
+
+    
 
 # F2FS Filesystem
 PRODUCT_PACKAGES += \
@@ -325,6 +277,7 @@ PRODUCT_PACKAGES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
+    android.hardware.wifi-service \
     wificond \
     hostapd \
     libwpa_client \
@@ -374,9 +327,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy
 
 # Include exynos4 platform specific parts
-TARGET_HAL_PATH := hardware/samsung/exynos4/hal
-TARGET_OMX_PATH := hardware/samsung/exynos/multimedia/openmax
-$(call inherit-product, hardware/samsung/exynos4210.mk)
+TARGET_HAL_PATH := hardware/samsung_legacy/exynos4/hal
+TARGET_OMX_PATH := hardware/samsung_legacy/exynos/multimedia/openmax
+$(call inherit-product, hardware/samsung_legacy/exynos4210.mk)
 
 # Shipping API level
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_k.mk)
