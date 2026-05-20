@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/samsung/galaxys2-common
+DEVICE_PATH := device/samsung/smdk4412-common
 
 # HIDL
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
@@ -94,7 +94,7 @@ EXTENDED_FONT_FOOTPRINT := true
 MALLOC_SVELTE := true
 
 # Filesystem
-TARGET_FS_CONFIG_GEN := device/samsung/galaxys2-common/config.fs
+TARGET_FS_CONFIG_GEN := device/samsung/smdk4412-common/config.fs
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -103,14 +103,14 @@ BOARD_ROOT_EXTRA_FOLDERS := efs misc
 BOARD_ROOT_EXTRA_SYMLINKS := /data/tombstones:/tombstones
 
 # Releasetools
-#TARGET_RELEASETOOLS_EXTENSIONS := ./device/samsung/galaxys2-common
+#TARGET_RELEASETOOLS_EXTENSIONS := ./device/samsung/smdk4412-common
 
 # Hardware tunables
 BOARD_HARDWARE_CLASS := hardware/samsung_legacy/lineagehw \
-    device/samsung/galaxys2-common/lineagehw
+    device/samsung/smdk4412-common/lineagehw
 
 # Graphics
-BOARD_EGL_CFG := device/samsung/galaxys2-common/configs/egl.cfg
+BOARD_EGL_CFG := device/samsung/smdk4412-common/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
@@ -142,7 +142,7 @@ USE_XML_AUDIO_POLICY_CONF := 1
 # RIL
 BOARD_PROVIDES_LIBRIL := true
 BOARD_MODEM_TYPE := xmm6260
-BOARD_RIL_CLASS := ../../../device/samsung/galaxys2-common/ril
+BOARD_RIL_CLASS := ../../../device/samsung/smdk4412-common/ril
 
 # Camera
 BOARD_CAMERA_HAVE_ISO := true
@@ -168,17 +168,17 @@ TARGET_NEEDS_NETD_DIRECT_CONNECT_RULE := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 PRODUCT_SOONG_NAMESPACES += hardware/broadcom/libbt
-BOARD_CUSTOM_BT_CONFIG := device/samsung/galaxys2-common/bluetooth/vnd_smdk4210.txt
+BOARD_CUSTOM_BT_CONFIG := device/samsung/smdk4412-common/bluetooth/vnd_smdk4210.txt
 
 # Selinux
 SELINUX_IGNORE_NEVERALLOWS := true
-BOARD_VENDOR_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/vendor
-#SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/public
-#SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/samsung/galaxys2-common/selinux/private
+BOARD_VENDOR_SEPOLICY_DIRS += device/samsung/smdk4412-common/selinux/vendor
+#SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/samsung/smdk4412-common/selinux/public
+#SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/samsung/smdk4412-common/selinux/private
 
 # Recovery
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/galaxys2-common/recovery/recovery_keys.c
-BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/galaxys2-common/recovery/graphics.c
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/smdk4412-common/recovery/recovery_keys.c
+BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/smdk4412-common/recovery/graphics.c
 BOARD_UMS_LUNFILE := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 BOARD_USES_MMCUTILS := true
 BOARD_USES_FULL_RECOVERY_IMAGE := true
@@ -191,7 +191,7 @@ TARGET_RECOVERY_DENSITY := mdpi
 RECOVERY_FSTAB_VERSION := 2
 
 # Device specific headers
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/galaxys2-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/smdk4412-common/include
 
 # Charging mode
 BOARD_BATTERY_DEVICE_NAME := "battery"
@@ -200,8 +200,8 @@ WITH_LINEAGE_CHARGER := false
 
 # Boot.img
 BOARD_CUSTOM_BOOTIMG := true
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/galaxys2-common/shbootimg.mk
-BOARD_CUSTOM_KERNEL_MK := device/samsung/galaxys2-common/shkernel.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/smdk4412-common/shbootimg.mk
+BOARD_CUSTOM_KERNEL_MK := device/samsung/smdk4412-common/shkernel.mk
 
 # Use the non-open-source parts, if they're present
--include vendor/samsung/galaxys2-common/BoardConfigVendor.mk
+-include vendor/samsung/smdk4412-common/BoardConfigVendor.mk

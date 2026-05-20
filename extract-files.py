@@ -19,7 +19,7 @@ from extract_utils.main import (
 )
 
 namespace_imports = [
-    'device/samsung/galaxys2-common',
+    'device/samsung/smdk4412-common',
 ]
 
 blob_fixups: blob_fixups_user_type = {
@@ -30,7 +30,7 @@ blob_fixups: blob_fixups_user_type = {
 
 
 module = ExtractUtilsModule(
-    'galaxys2-common',
+    'smdk4412-common',
     'samsung',
     namespace_imports=namespace_imports,
     blob_fixups=blob_fixups,

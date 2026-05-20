@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-COMMON_PATH := device/samsung/galaxys2-common
+COMMON_PATH := device/samsung/smdk4412-common
 
 PRODUCT_BUILD_RECOVERY_IMAGE := true
 
@@ -51,9 +51,9 @@ PRODUCT_COPY_FILES += \
 
 # TWRP
 ifeq ($(RECOVERY_VARIANT),twrp)
-$(call inherit-product, device/samsung/galaxys2-common/twrp/twrp.mk)
+$(call inherit-product, device/samsung/smdk4412-common/twrp/twrp.mk)
 else
-TARGET_RECOVERY_FSTAB := device/samsung/galaxys2-common/rootdir/fstab.smdk4210
+TARGET_RECOVERY_FSTAB := device/samsung/smdk4412-common/rootdir/fstab.smdk4210
 endif
 
 
@@ -335,7 +335,7 @@ $(call inherit-product, hardware/samsung_legacy/exynos4210.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_k.mk)
 
 # Include non-open-source parts
-$(call inherit-product, vendor/samsung/galaxys2-common/common-vendor.mk)
+$(call inherit-product, vendor/samsung/smdk4412-common/common-vendor.mk)
 
 # Use GO
 $(call inherit-product, build/make/target/product/go_defaults.mk)
