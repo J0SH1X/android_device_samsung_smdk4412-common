@@ -23,6 +23,10 @@ LOCAL_SHARED_LIBRARIES := \
 	libbinder \
 	libc
 
+ifneq ($(TARGET_SPECIFIC_HEADER_PATH),)
+LOCAL_C_INCLUDES += $(addprefix $(TOP)/, $(TARGET_SPECIFIC_HEADER_PATH))
+endif
+
 LOCAL_C_INCLUDES += proto
 LOCAL_CFLAGS := -Wall -Werror -DPB_ENABLE_MALLOC -Wno-unused-parameter -DPB_FIELD_16BIT
 
