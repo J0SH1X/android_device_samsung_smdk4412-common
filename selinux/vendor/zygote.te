@@ -1,2 +1,0 @@
-allow zygote device:file { open write };
-allow zygote exported_camera_prop:file { getattr open read write };
