@@ -15,8 +15,6 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/samsung/smdk4412-common
-
 # HIDL
 PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 
@@ -65,7 +63,9 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 TARGET_KERNEL_CLANG_COMPILE := false
 
 # Manifest
-DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
+DEVICE_MATRIX_FILE := $(COMMON_PATH)/compatibility_matrix.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(COMMON_PATH)/framework_compatibility_matrix_legacy.xml
 
 # Properties
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
@@ -103,7 +103,7 @@ BOARD_ROOT_EXTRA_FOLDERS := efs misc
 BOARD_ROOT_EXTRA_SYMLINKS := /data/tombstones:/tombstones
 
 # Releasetools
-#TARGET_RELEASETOOLS_EXTENSIONS := ./device/samsung/smdk4412-common
+TARGET_RELEASETOOLS_EXTENSIONS := $(COMMON_PATH)
 
 # Hardware tunables
 BOARD_HARDWARE_CLASS := hardware/samsung_legacy/lineagehw \

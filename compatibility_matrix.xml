@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compatibility-matrix version="1.0" type="device" level="legacy">
+    <!-- android.frameworks.cameraservice.service@2.1::ICameraService/default -->
+    <hal format="hidl" optional="true">
+        <name>android.frameworks.cameraservice.service</name>
+        <version>2.1</version>
+        <interface>
+            <name>ICameraService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+
+    <!-- android.hardware.configstore@1.1::ISurfaceFlingerConfigs/default -->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.configstore</name>
+        <version>1.1</version>
+        <interface>
+            <name>ISurfaceFlingerConfigs</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+
+    <!-- android.hardware.radio.deprecated@1.0::IOemHook/slot1 -->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.radio.deprecated</name>
+        <version>1.0</version>
+        <interface>
+            <name>IOemHook</name>
+            <instance>slot1</instance>
+        </interface>
+    </hal>
+
+    <!-- android.hardware.vibrator@1.0::IVibrator/default -->
+    <hal format="hidl" optional="true">
+        <name>android.hardware.vibrator</name>
+        <version>1.0</version>
+        <interface>
+            <name>IVibrator</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+
+</compatibility-matrix>
