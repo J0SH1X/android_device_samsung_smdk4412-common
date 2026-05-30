@@ -16,6 +16,7 @@
 COMMON_PATH := device/samsung/smdk4412-common
 
 PRODUCT_BUILD_RECOVERY_IMAGE := true
+PRODUCT_ENABLE_UFFD_GC := false
 
 # Enable DM file pre-opting to reduce first boot time
 PRODUCT_DEX_PREOPT_GENERATE_DM_FILES := true
@@ -33,8 +34,8 @@ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS  += * \
 
 # Init
 PRODUCT_COPY_FILES := \
-    $(COMMON_PATH)/rootdir/init.smdk4210.usb.rc:root/init.smdk4210.usb.rc \
-    $(COMMON_PATH)/rootdir/init.smdk4210.rc:root/init.smdk4210.rc
+    $(COMMON_PATH)/rootdir/init.smdk4210.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.smdk4210.usb.rc \
+    $(COMMON_PATH)/rootdir/init.smdk4210.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.smdk4210.rc
 
 # init.d
 PRODUCT_COPY_FILES += \
@@ -42,7 +43,7 @@ PRODUCT_COPY_FILES += \
 
 # File system table
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/fstab.smdk4210:root/fstab.smdk4210 \
+    $(COMMON_PATH)/rootdir/fstab.smdk4210:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.smdk4210 \
     $(COMMON_PATH)/rootdir/fstab.smdk4210:$(TARGET_COPY_OUT_RAMDISK)/fstab.smdk4210
 
 # Component overrides
@@ -59,7 +60,7 @@ endif
 
 # Recovery rootdir
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/rootdir/init.recovery.smdk4210.rc:root/init.recovery.smdk4210.rc
+    $(COMMON_PATH)/rootdir/init.recovery.smdk4210.rc:recovery/root/init.recovery.smdk4210.rc
 
 # Audio
 PRODUCT_COPY_FILES += \
@@ -126,10 +127,10 @@ PRODUCT_PACKAGES += \
     libcutils-v29
 
 # Legacy GPS
-PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0-impl \
-    android.hardware.gnss@1.0-service.exynos4 \
-    gps.smdk4210
+#PRODUCT_PACKAGES += \
+    #android.hardware.gnss@1.0-impl \
+    #android.hardware.gnss@1.0-service.exynos4 \
+    #gps.smdk4210
 
 # Power HAL
 PRODUCT_PACKAGES += \
@@ -156,16 +157,17 @@ PRODUCT_PACKAGES += \
 # HAL
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl-exynos4 \
+    android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl-exynos4 \
     android.hardware.keymaster@3.0-impl \
     gralloc.exynos4 \
+    libhwc2on1adapter \
     hwcomposer.exynos4 \
     libhwconverter \
     libs5pjpeg \
     libfimg \
     libsecion \
     libC
-#    android.hardware.graphics.composer@2.1-impl \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -234,6 +236,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
+
+# Shims
+PRODUCT_PACKAGES += \
+    libstdc++_vendor
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
@@ -351,3 +357,9 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.service.adb.enable=1 \
     persist.sys.usb.config=adb
 endif
+
+## This is a workaround for the Bluetooth sanitize shadow call stack (SCS)
+## crash reported here: https://issuetracker.google.com/issues/302408537.
+## For details of the root cause and the cts vts tests comparison between
+## the preloading and non-preloading builds, please check the above issue.
+PRODUCT_PROPERTY_OVERRIDES += ro.zygote.disable_gl_preload=1

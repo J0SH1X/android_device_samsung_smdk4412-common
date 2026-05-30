@@ -70,6 +70,7 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(COMMON_PATH)/framework_compatibi
 # Properties
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
 TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
+TARGET_PRODUCT_PROP += $(COMMON_PATH)/product.prop
 
 # Bionic
 TARGET_LD_SHIM_LIBS := \
