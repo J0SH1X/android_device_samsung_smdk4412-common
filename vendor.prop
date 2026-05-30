@@ -113,6 +113,9 @@ persist.vendor.qcom.bluetooth.aptxadaptiver2_1_support=true
 
 ro.bluetooth.a2dp_offload.supported=true
 
+# BPF
+ro.bpf.kver_override=5.4.300
+
 # Dalvik
 dalvik.vm.heapgrowthlimit=256m
 dalvik.vm.heapmaxfree=8m
